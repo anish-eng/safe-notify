@@ -6,7 +6,7 @@ Safe-Notify is a **production-inspired asynchronous notification delivery system
 This project focuses on addressing a **real distributed systems problems** that occur in production environments:  
 retry storms, duplicate notification sends, worker and process crashes, delayed retries, and operational recovery in case of delivery failure.
 
-![Safe-Notify Architecture](./app_diagram.png)
+![Safe-Notify Architecture](./App_diagram.png)
 
 ---
 
