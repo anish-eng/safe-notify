@@ -50,13 +50,13 @@ I developed Safe-Notify to help solve these problems.
 Safe-Notify is built around the following principles:
 
 - Asynchronous by default -Since the API gateway interacting with the user and the actual task sending mechanism is separated, these processes do not have to occur sequentially.  
-✔ Explicit failure handling and preventing blocking of tasks and slowdown of system  
-✔ Controlled retries of operations with an exponential backoff to avoid successive consecutive retries and overloading the system
-✔ Idempotent processing - ensuring notifications are not sent twice for the same task by storing a unique idempotency key
-✔ Durable state- Real time status of each notification is stored in a permanent database, so there is a record of the status of each notification and nothing is lost
-✔ Observability & replay - Through displaying the real-time status of a message sent through a react.js dashboard and allowing retry to send notifications when maximum limit of trial is reached
-✔ Horizontally scalable - The prototype is built assuming a single worker that is processing the incoming tasks, but is designed such that more workers/ processing resources can be added to ensure quick and efficient processing
-✔ Simlulating system failures and chaos testing to understand how the system would behave incase of system failure
+- Explicit failure handling and preventing blocking of tasks and slowdown of system  
+- Controlled retries of operations with an exponential backoff to avoid successive consecutive retries and overloading the system
+- Idempotent processing - ensuring notifications are not sent twice for the same task by storing a unique idempotency key
+- Durable state- Real time status of each notification is stored in a permanent database, so there is a record of the status of each notification and nothing is lost
+- Observability & replay - Through displaying the real-time status of a message sent through a react.js dashboard and allowing retry to send notifications when maximum limit of trial is reached
+- Horizontally scalable - The prototype is built assuming a single worker that is processing the incoming tasks, but is designed such that more workers/ processing resources can be added to ensure quick and efficient processing
+-Simlulating system failures and chaos testing to understand how the system would behave incase of failures.
 ---
 
 ## 🏗 High-Level Architecture
@@ -321,6 +321,22 @@ This system aims to be a scalable way to deliver notifications like in a real pr
 - Reliable and consistent notification delivery without delays and errors.
 
 
+🔮 Future Improvements
+
+- Multiple retry tiers (short/long delays)
+
+- Adding filtering by task status, UX improvements
+
+- Rate-limiting per recipient
+
+- Add more notification providers
+
+- Metrics with Prometheus/Grafana
+
+- Partitioned Kafka topics
+
+- Cloud deployment and infrastructure management (ECS / EKS)
+
 
 ---
 
@@ -343,18 +359,3 @@ cd frontend
 npm install
 npm run dev
 
-🔮 Future Improvements
-
-Multiple retry tiers (short/long delays)
-
-Adding filtering by task status, UX improvements
-
-Rate-limiting per recipient
-
-Add more notification providers
-
-Metrics with Prometheus/Grafana
-
-Partitioned Kafka topics
-
-Cloud deployment and infrastructure management (ECS / EKS)
