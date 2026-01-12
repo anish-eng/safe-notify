@@ -49,7 +49,7 @@ I developed Safe-Notify to help solve these problems.
 
 Safe-Notify is built around the following principles:
 
-✔ Asynchronous by default -Since the API gateway interacting with the user and the actual task sending mechanism is separated, these processes do not have to occur sequentially.  
+- Asynchronous by default -Since the API gateway interacting with the user and the actual task sending mechanism is separated, these processes do not have to occur sequentially.  
 ✔ Explicit failure handling and preventing blocking of tasks and slowdown of system  
 ✔ Controlled retries of operations with an exponential backoff to avoid successive consecutive retries and overloading the system
 ✔ Idempotent processing - ensuring notifications are not sent twice for the same task by storing a unique idempotency key
