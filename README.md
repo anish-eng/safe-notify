@@ -4,7 +4,7 @@
 Safe-Notify is a **production-inspired asynchronous notification delivery system** designed to reliably deliver notifications in the presence of failures, retries, spikes, and unreliable third-party services.
 
 This project focuses on addressing a **real distributed systems problems** that occur in production environments:  
-retry storms, duplicate sends, worker and process crashes, delayed retries, and operational recovery in case of delivery failure.
+retry storms, duplicate notification sends, worker and process crashes, delayed retries, and operational recovery in case of delivery failure.
 
 ![Safe-Notify Architecture](./app_diagram.png)
 
@@ -39,7 +39,7 @@ A synchronous design like:
 HTTP request → send email → return response
 
 
-fails silently, does not scale, and is unsafe because incase of a sending failure we don't know the point of failure and cannot ensure reliable message delivery because we dont know if the notification was successfully delivered or not. Trying to redeliver a message may cause duplicate messages which is not ideal. Also there is no record stored of what happened and why
+often fails silently, does not scale, and is not resilient because incase of a failure we don't know where the point of failure is and cannot ensure reliable message delivery because we dont know if the notification was successfully delivered or not. Trying to redeliver a message may cause duplicate messages which is not ideal. Also there is no record stored of what happened and why
 
 
 
@@ -76,7 +76,7 @@ Each component is **intentionally decoupled** so that failures are isolated and 
 
 ## 🔄 End-to-End Data Flow
 
-### 1️⃣ Event Creation (Ingress)
+### 1️⃣ Event Creation 
 
 - User submits an event from the UI
 - API validates input
@@ -85,8 +85,8 @@ Each component is **intentionally decoupled** so that failures are isolated and 
   - `attempt_count = 0`
 - Task ID is published to Kafka (`safe-notify-tasks`)
 
-**Why this matters:**  
-The API returns immediately and never blocks on delivery. The API is not tasked with delivering the message so it will not get blocked with that task.
+**Why this is important:**  
+The API returns immediately and never blocks on delivery. The API is not tasked with delivering the message so it will not get blocked with that task and this ensures asynchronous execution.
 
 ---
 
@@ -270,7 +270,7 @@ Manual intevention can be done incase a task has failed to send after 3 successi
 
 
 **Key guarantees**
-- Idempotent execution
+- Idempotent execution(Notifications are never sent twice)
 - Safe retries
 - Crash recovery(If a worker fails while processing a task, another worker can take up that task)
 
@@ -291,25 +291,13 @@ Manual intevention can be done incase a task has failed to send after 3 successi
 - Task status visible in UI
 - Attempt counts tracked
 - Last error recorded
-- Retry timing explicit
-- Logs across all services
+- Retry timing is explicit and known
+- Logs are maintained to troubleshoot errors across services.
 
-This makes the system **easily debuggable**.
 
 ---
 
-## 🧠 Why This Design Works
-
-This system aims to be a scalable way to deliver notifications like in a real production system:
-
-- Event-driven asynchronous processing
-- Explicit retry task pipeline
-- Storing durable state of tasks reliably.
-- Clear understanding and management of failure
-- Reliable and consistent notification delivery without delays and errors.
-
-
-🔮 Future Improvements
+🔮 Future improvement areas
 
 - Multiple retry tiers (short/long delays)
 
