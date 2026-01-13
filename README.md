@@ -17,6 +17,7 @@ retry storms, duplicate notification sends, worker and process crashes, delayed 
 - Kafka for storing the task ids as an intermediate state
 - AWS-SES- For the email sending service
 - AWS DynamoDB for storing the task information
+- Docker for containerization
 
 ## 🧠 The Problem This System Solves
 
